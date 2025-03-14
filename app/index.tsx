@@ -1,16 +1,66 @@
-import { View, Text, Button, StyleSheet } from "react-native";
-import { useRouter } from "expo-router";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { RelativePathString, useRouter } from "expo-router";
+import React from "react";
 
 export default function HomeScreen() {
   const router = useRouter();
+  const cards = [
+    { id: 1, title: "Devocional", screen: "devocional" },
+    { id: 2, title: "Oração", screen: "oracao" },
+    { id: 3, title: "Item 3", screen: "/" },
+    { id: 4, title: "Item 4", screen: "/" },
+  ];
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Bem-vindo ao Sola Gratia App</Text>
-      <Button
-        title="Começar Devocional"
-        onPress={() => router.push("/devocional")}
-      />
+      <ImageBackground
+        source={require("../assets/images/bg.jpg")}
+        resizeMode="cover"
+        style={styles.backgroundImage}
+      >
+        <Text style={styles.title}> Sola Gratia </Text>
+
+        {/* Cards Centrais */}
+        <View style={styles.cardsContainer}>
+          {cards.map((card) => (
+            <TouchableOpacity
+              key={card.id}
+              style={styles.card}
+              onPress={() => {
+                if (card.screen !== "/") {
+                  router.push(`/${card.screen}` as RelativePathString);
+                } else {
+                  console.warn("Screen not found");
+                }
+              }}
+            >
+              <Text style={styles.cardText}>{card.title}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        {/* Menu Inferior */}
+        <View style={styles.bottomMenu}>
+          <TouchableOpacity onPress={() => router.push("/")}>
+            <Ionicons name="home" size={30} color="white" />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => router.push("/")}>
+            <Ionicons name="settings" size={30} color="white" />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => router.push("/")}>
+            <Ionicons name="person" size={30} color="white" />
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
     </View>
   );
 }
@@ -18,13 +68,54 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  backgroundImage: {
+    flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f5f5f5",
+    padding: 10,
   },
   title: {
-    fontSize: 20,
+    fontSize: 22,
+    color: "white",
     fontWeight: "bold",
-    marginBottom: 20,
+    textAlign: "center",
+    position: "absolute",
+    top: 30,
+    width: "auto",
+    textShadowColor: "rgba(0, 0, 0, 0.75)",
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 10,
+  },
+  cardsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    marginTop: 0,
+  },
+  card: {
+    width: "45%",
+    height: 200,
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    margin: 8,
+    padding: 8,
+    borderRadius: 10,
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    boxShadow: "2px 2px 3.14px rgba(0, 0, 0, 0.25)",
+    elevation: 5,
+  },
+  cardText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#2c3e50",
+    textAlign: "center",
+  },
+  bottomMenu: {
+    position: "absolute",
+    bottom: 30,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
   },
 });
