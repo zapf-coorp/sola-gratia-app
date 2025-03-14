@@ -1,17 +1,21 @@
-import { View, Text, Button, StyleSheet, TouchableOpacity, ImageBackground } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { RelativePathString, useRouter } from "expo-router";
 import React from "react";
 
-
-
 export default function HomeScreen() {
   const router = useRouter();
   const cards = [
-    { id: 1, title: "Devocional", screen: "./screens/devocional" },
-    { id: 2, title: "Oração", screen: "./screens/oracao" },
-    { id: 3, title: "Item 3", screen: "nonono" },
-    { id: 4, title: "Item 4", screen: "nonono" },
+    { id: 1, title: "Devocional", screen: "devocional" },
+    { id: 2, title: "Oração", screen: "oracao" },
+    { id: 3, title: "Item 3", screen: "/" },
+    { id: 4, title: "Item 4", screen: "/" },
   ];
 
   return (
@@ -30,7 +34,7 @@ export default function HomeScreen() {
               key={card.id}
               style={styles.card}
               onPress={() => {
-                if (card.screen !== "nonono") {
+                if (card.screen !== "/") {
                   router.push(`/${card.screen}` as RelativePathString);
                 } else {
                   console.warn("Screen not found");
@@ -44,15 +48,15 @@ export default function HomeScreen() {
 
         {/* Menu Inferior */}
         <View style={styles.bottomMenu}>
-          <TouchableOpacity onPress={() => router.push('/')}>
+          <TouchableOpacity onPress={() => router.push("/")}>
             <Ionicons name="home" size={30} color="white" />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => router.push('/')}>
+          <TouchableOpacity onPress={() => router.push("/")}>
             <Ionicons name="settings" size={30} color="white" />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => router.push('/')}>
+          <TouchableOpacity onPress={() => router.push("/")}>
             <Ionicons name="person" size={30} color="white" />
           </TouchableOpacity>
         </View>
