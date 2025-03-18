@@ -5,14 +5,16 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { RelativePathString, useRouter } from "expo-router";
 import React from "react";
-import { Cards } from "./shared/cards";
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import { CardsConst } from "./shared/cards-consts";
+import Card from "./components/card";
+
 
 export default function HomeScreen() {
   const router = useRouter();
-  const cards = Cards;
+  const cards = CardsConst;
 
   return (
     <View style={styles.container}>
@@ -26,25 +28,7 @@ export default function HomeScreen() {
         {/* Cards Centrais */}
         <View style={styles.cardsContainer}>
           {cards.map((card) => (
-            <TouchableOpacity
-              key={card.id}
-              style={styles.card}
-              onPress={() => {
-                if (card.screen !== "/") {
-                  router.push(`/${card.screen}` as RelativePathString);
-                } else {
-                  console.warn("Screen not found");
-                }
-              }}
-            >
-              <ImageBackground
-                source={card.image}
-                style={styles.cardImage}
-                imageStyle={styles.cardImageStyle}
-              >
-                <Text style={styles.cardText}>{card.title}</Text>
-              </ImageBackground>
-            </TouchableOpacity>
+            <Card key={card.id} card={card} />
           ))}
         </View>
 
