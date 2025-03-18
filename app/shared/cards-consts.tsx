@@ -5,7 +5,7 @@ interface ICard {
   image: string;
 }
 
-export const Cards: ICard[] = [
+export const CardsConst: ICard[] = [
   {
     id: 1,
     title: "Devocional",
@@ -32,4 +32,4 @@ export const Cards: ICard[] = [
   },
 ];
 
-export default Cards;
+export default CardsConst;
