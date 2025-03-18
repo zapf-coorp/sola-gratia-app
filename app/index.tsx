@@ -5,18 +5,16 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { RelativePathString, useRouter } from "expo-router";
 import React from "react";
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import { CardsConst } from "./shared/cards-consts";
+import Card from "./components/card";
+
 
 export default function HomeScreen() {
   const router = useRouter();
-  const cards = [
-    { id: 1, title: "Devocional", screen: "devocional" },
-    { id: 2, title: "Oração", screen: "oracao" },
-    { id: 3, title: "Item 3", screen: "/" },
-    { id: 4, title: "Item 4", screen: "/" },
-  ];
+  const cards = CardsConst;
 
   return (
     <View style={styles.container}>
@@ -30,19 +28,7 @@ export default function HomeScreen() {
         {/* Cards Centrais */}
         <View style={styles.cardsContainer}>
           {cards.map((card) => (
-            <TouchableOpacity
-              key={card.id}
-              style={styles.card}
-              onPress={() => {
-                if (card.screen !== "/") {
-                  router.push(`/${card.screen}` as RelativePathString);
-                } else {
-                  console.warn("Screen not found");
-                }
-              }}
-            >
-              <Text style={styles.cardText}>{card.title}</Text>
-            </TouchableOpacity>
+            <Card key={card.id} card={card} />
           ))}
         </View>
 
@@ -95,20 +81,32 @@ const styles = StyleSheet.create({
   card: {
     width: "45%",
     height: 200,
-    backgroundColor: "rgba(255, 255, 255, 0.9)",
     margin: 8,
-    padding: 8,
     borderRadius: 10,
     justifyContent: "flex-start",
     alignItems: "flex-start",
     boxShadow: "2px 2px 3.14px rgba(0, 0, 0, 0.25)",
     elevation: 5,
+    overflow: 'hidden',
+  },
+  cardImage: {
+    flex: 1,
+    width: '100%',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    padding: 8,
+  },
+  cardImageStyle: {
+    borderRadius: 10,
   },
   cardText: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#2c3e50",
+    color: "white",
     textAlign: "center",
+    textShadowColor: "rgba(0, 0, 0, 0.75)",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 5,
   },
   bottomMenu: {
     position: "absolute",
@@ -117,5 +115,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingHorizontal: 20,
-  },
+  }
 });
